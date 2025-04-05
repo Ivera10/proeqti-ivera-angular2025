@@ -1,0 +1,104 @@
+.h1dd {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 40px;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+    font-family:  'Courier New', Courier, monospace;
+    
+    
+}
+
+.sityvebidd {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 4px solid rgb(218, 28, 28);
+    justify-content: center;
+    cursor: pointer;
+    margin: 64px;
+    opacity: 0;
+    animation: slideIn 1.5s ease-in-out forwards;
+}
+
+.sityvebidd button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 22px;
+    transition: all 0.3s ease;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.sityvebidd button:hover {
+    background: rgb(218, 28, 28);
+    color: rgb(225, 212, 212);
+    border-radius: 5px;
+    font-weight: bold;
+    transform: scale(0.9);
+}
+
+@media (max-width: 1150px) {
+    .sityvebidd {
+        flex-direction: column;
+        align-items: center;
+        
+        
+    }
+    
+    .sityvebidd button {
+        font-size: 20px;
+        padding: 8px 12px;
+    }
+}
+
+
+@media (max-width: 1040px) {
+    .sityvebidd {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+
+    }
+    
+    .sityvebidd button {
+        font-size: 24px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sityvebidd {
+        margin: 16px;
+        padding: 5px;
+    }
+    
+    .sityvebidd button {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-80px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+} 
