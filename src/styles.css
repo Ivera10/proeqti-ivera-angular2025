@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
+ 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap');
 
 html {
@@ -11,6 +10,17 @@ html {
   body {
     background-color: rgb(196, 208, 212);
   }
+
+
+  * {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+
+  }
+  
+ 
+
 
 
 
