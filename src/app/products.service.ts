@@ -34,7 +34,5 @@ export class ProductsService {
     return this.http.get<Product[]>(`${this.apiUrl}/GetFiltered`, { params });
   }
  
-  // deleteProduct(id: number): Observable<void> {
-  //   return this.http.delete<void>(`${this.apiUrl}/Delete/${id}`);
-  // }
+
 }
