@@ -2,18 +2,13 @@
 <div class="filter-container">
 
     <div class="header-banner">
-      <h1> <span>Welcome</span> to Our <span>Step Restaurant</span></h1>
+      <h1> <span>Welcome</span> to Our Step Restaurant</h1>
       <p>Discover the best food and flavors</p>
       <p>This Website is made by <span>Iveri Khachiashvili</span></p>
-    </div> 
-
-    
+    </div>
 
 
 <!-- კატეგორიების ფილტრი -->
-
-  <h1 class="h1categories">Categories:</h1>
-
 <div class="filter-container">
   <div class="categories-scroll-container">
     <div class="categories-container">
@@ -33,13 +28,7 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
+ 
 <div class="flex">
   <!-- filter mushaoba -->
   <div class="filter-mtliani">
@@ -58,13 +47,12 @@
           <option value="3">🔥 3</option>
         </select>
       </div>
-
+ 
       <!-- Replace the two separate nut checkboxes with radio buttons -->
       <div class="nuts-filter">
         <label class="lastBtn">Nuts:</label>
         <div>
-
-                    <label class="lastBtn">
+          <label class="lastBtn">
             <input
               type="radio"
               name="nutsFilter"
@@ -74,7 +62,6 @@
             />
             All
           </label>
-
           <!-- <label class="lastBtn">
             <input
               type="radio"
@@ -85,7 +72,6 @@
             />
             Contains Nuts
           </label> -->
-
           <label class="lastBtn">
             <input
               type="radio"
@@ -98,7 +84,7 @@
           </label>
         </div>
       </div>
-
+ 
       <div class="checkbox-cotaqvevitdaweva">
         <label class="lastBtn">
           <input
@@ -110,53 +96,66 @@
           Vegetarian Only
         </label>
       </div>
-
+ 
       <button class="resetfilterdesign" (click)="resetFilters()">
         RESET FILTER
       </button>
     </div>
   </div>
-
-
  
-<!-- პროდუქტების ჩვენება -->
+  <!-- პროდუქტების ჩვენება -->
+ 
+  <div class="list">
+    <div *ngFor="let product of products" class="list-item">
+      <img [src]="product?.image" alt="{{ product?.name }}" />
+ 
+      <div class="dizainitextlist">
+        <h1>{{ product?.name }}</h1>
+ 
+        <div class="spiciness-container">
+          <span>Spiciness: 🔥{{ product.spiciness }}</span>
+        </div>
+ 
+        <div
+          *ngIf="product?.nuts || product?.vegeterian"
+          class="nuts-vegeterian-yes-or-no"
+        >
+          <span *ngIf="product?.nuts">☑️ Nuts </span>
+          <span *ngIf="product?.vegeterian">☑️ Vegetarian </span>
+        </div>
+ 
+        <div class="price-container">
+          <h2>$ {{ product.price }}</h2>
+          <button #addButton (click)="addToCart(product, addButton)">
+            Add to cart
+          </button>
 
-<div class="list">
-  <div *ngFor="let product of products" class="list-item">
+          <button class="hametqibicho">See product</button>
 
-    <img [src]="product?.image" alt="{{ product?.name }}">
-
-    <div class="dizainitextlist">
-      <h1>{{ product?.name }}</h1>
-
-      <div class="spiciness-container">
-        <span>Spiciness: 🔥{{ product.spiciness }}</span>
-      </div>
-
-      <div *ngIf="product?.nuts || product?.vegetarian" class="nuts-vegeterian-yes-or-no">
-        <span *ngIf="product?.nuts">☑️ Nuts </span>
-        <span *ngIf="product?.vegetarian">☑️ Vegetarian </span>
-      </div>
-
-      <div class="price-container">
-        <h2> $ {{ product.price }}</h2>
-        <button>Add to cart</button>
+        </div>
       </div>
     </div>
-
   </div>
-</div> 
+</div>
 
 
 
 
 
- 
 
 
 
 
 
+
+
+
+
+<!-- პროდუქ
+
+
+
+ ების 
 
 
 
@@ -224,3 +223,32 @@ filter mushaoba
 
 </div>
 </div> -->
+<!-- <div class="menu-container">
+  <div *ngFor="let product of products" class="product-card">
+    <img [src]="product?.image" alt="{{ product?.name }}">
+    <h3>{{ product?.name }}</h3>
+    <p>ფასი: {{ product?.price }}₾</p>
+    <p *ngIf="product?.nuts">🥜 შეიცავს თხილს</p>
+    <p *ngIf="product?.vegetarian">🌱 ვეგეტარიანული</p>
+    <p>სიწიწაკე: 🔥 {{ product?.spiciness }}</p>
+
+<button (click)="product?.id !== undefined ? addToBasket(product.id) : null">
+   
+      <button>
+      კალათაში დამატება
+    </button>
+ 
+ 
+  </div>
+</div>
+ 
+
+ <button class="btn-edit" (click)="editProduct(product)">რედაქტირება</button>
+<button class="btn-delete" (click)="deleteProduct(product.id)">წაშლა</button>  -->
+
+
+
+
+
+
+

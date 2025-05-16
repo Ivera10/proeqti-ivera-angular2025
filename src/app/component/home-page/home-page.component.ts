@@ -5,7 +5,7 @@ import { ProductsComponent } from '../../products/products.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink,RouterModule, ProductsComponent],
+  imports: [RouterModule, ProductsComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })

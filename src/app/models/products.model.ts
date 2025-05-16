@@ -4,7 +4,7 @@ export interface Product {
     price: number;
     nuts: boolean;
     image: string;
-    vegetarian: boolean;
+    vegeterian: boolean;
     spiciness: number;
     categoryId: number;
   }
