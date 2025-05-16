@@ -1,14 +1,4 @@
-.h1dd {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    font-size: 40px;
-    opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
-    font-family:  'Courier New', Courier, monospace;
-    
-    
-}
+
 
 .sityvebidd {
     display: flex;
