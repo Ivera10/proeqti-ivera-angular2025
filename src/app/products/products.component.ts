@@ -175,6 +175,71 @@ export class ProductsComponent implements OnInit {
 
 
 
+  // კალათაში დამატების მეთოდი
+  addToCart(product: Product, button?: HTMLButtonElement): void {
+    console.log('Adding to cart:', product);
+
+    // ღილაკის ვიზუალური უკუკავშირი
+    if (button) {
+      button.classList.add('adding'); // CSS კლასის დამატება ანიმაციისთვის
+      button.textContent = 'Adding...'; // ტექსტის შეცვლა
+    }
+
+    this.basketService.addToBasket(product).subscribe(
+      () => {
+        console.log('Product added to cart successfully');
+        this.showNotification(`✅ ${product.name} added to cart`, false, true); // წარმატების შეტყობინება
+
+        // ღილაკის გადატვირთვა დაყოვნების შემდეგ
+        setTimeout(() => {
+          if (button) {
+            button.classList.remove('adding'); // CSS კლასის წაშლა
+            button.textContent = 'Add to cart'; // ტექსტის დაბრუნება
+          }
+        }, 500);
+      },
+      (error) => {
+        console.error('Error adding to basket:', error);
+        this.showNotification('❌ Failed to add to cart', true); // შეცდომის შეტყობინება
+
+        // ღილაკის დაუყოვნებელი გადატვირთვა
+        if (button) {
+          button.classList.remove('adding');
+          button.textContent = 'Add to cart';
+        }
+      }
+    );
+  }
+
+  // შეტყობინების ჩვენების მეთოდი
+  showNotification(
+    message: string, // შეტყობინების ტექსტი
+    isError: boolean = false, // არის თუ არა შეცდომა
+    isCart: boolean = false // არის თუ არა კალათის შეტყობინება
+  ): void {
+    console.log('Showing notification:', message, isError);
+
+    const notification = document.createElement('div'); // ახალი ელემენტის შექმნა
+    notification.textContent = message; // შეტყობინების ტექსტის დამატება
+    notification.className = isError
+      ? 'notification error' // შეცდომის სტილი
+      : isCart
+      ? 'notification cart-success' // კალათის წარმატების სტილი
+      : 'notification success'; // ჩვეულებრივი წარმატების სტილი
+
+    document.body.appendChild(notification); // შეტყობინების დამატება DOM-ზე
+
+    // 3 წამის შემდეგ ავტომატურად წაშლა
+    setTimeout(() => {
+      notification.classList.add('fade-out'); // გაქრობის ანიმაცია
+      setTimeout(() => {
+        document.body.removeChild(notification); // დოკუმენტიდან წაშლა
+      }, 500);
+    }, 3000);
+  }
+}
+
+
 
 
 
