@@ -1,3 +1,27 @@
-<p>card-page works!</p>
+ <div class="card-page-mtliani">
+  <div *ngFor="let product of products" class="card-page-card">
+    <div class="card-page-image-section">
+      <img [src]="product?.image" alt="{{ product?.name }}" />
+    </div>
+    <div class="card-page-info-section">
+      <h2 class="card-page-title">{{ product?.name }}</h2>
+      <div class="card-page-spiciness">
+        <span>Spiciness: 🔥{{ product?.spiciness }}</span>
+      </div>
+      <div class="card-page-tags">
+        <span *ngIf="product?.nuts" class="card-page-tag nuts">🥜 Contains Nuts</span>
+        <span *ngIf="product?.vegetarian" class="card-page-tag vegetarian">🌱 Vegetarian</span>
+      </div>
+      <div class="card-page-description">
+        <p>{{ product?.description || 'No description available.' }}</p>
+      </div>
+      <div class="card-page-price-row">
+        <span class="card-page-price">$ {{ product?.price }}</span>
+        <button class="card-page-add-btn">Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
 
 

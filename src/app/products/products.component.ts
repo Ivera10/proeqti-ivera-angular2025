@@ -385,11 +385,13 @@ import { Product } from '../models/products.model'; // პროდუქტი�
 import { ProductsService } from '../products.service'; // პროდუქტების სერვისის იმპორტი
 import { BasketService } from '../services/basket.service'; // კალათის სერვისის იმპორტი
 import { FormsModule } from '@angular/forms'; // ფორმების მოდულის იმპორტი (ngModel-ისთვის)
+import { RouterLink, RouterModule } from '@angular/router';
  
+
 @Component({
   selector: 'app-products', // კომპონენტის სელექტორი HTML-ში გამოსაყენებლად
   standalone: true, // დამოუკიდებელი კომპონენტის მითითება
-  imports: [CommonModule, FormsModule], // საჭირო მოდულების იმპორტი კომპონენტისთვის
+  imports: [CommonModule, FormsModule, RouterLink, RouterModule], // საჭირო მოდულების იმპორტი კომპონენტისთვის
   templateUrl: './products.component.html', // HTML შაბლონის მისამართი
   styleUrls: ['./products.component.css'], // CSS ფაილის მისამართი
 })

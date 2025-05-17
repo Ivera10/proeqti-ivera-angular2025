@@ -19,9 +19,15 @@
 import { Routes } from '@angular/router';
 import { BasketComponent } from './basket/basket.component';
 import { ProductsComponent } from './products/products.component';
+import { CardPageComponent } from './card-page/card-page.component';
  
 export const routes: Routes = [
+
   { path: '', component: ProductsComponent },
   { path: 'basket', component: BasketComponent },
+  { path: 'card-page-product', component: CardPageComponent },
   { path: '**', redirectTo: '' },
+
+  
+
 ];
