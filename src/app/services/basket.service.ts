@@ -4,19 +4,28 @@ import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { Product } from '../models/products.model';
  
+
 export interface BasketItem {
   id?: number;
   quantity: number;
   price: number;
   productId: number;
   product?: Product;
-  clientId?: number; // Add client-side ID
+  clientId?: number; 
 }
  
 @Injectable({
   providedIn: 'root',
 })
 export class BasketService {
+
+
+  //ეს BasketService არის Angular სერვისი, რომელიც მართავს კალათის (basket)
+  // მონაცემებს ონლაინ მაღაზიაში. მისი ძირითადი დანიშნულებაა კალათაში 
+  // პროდუქტების დამატება, წაშლა, განახლება და კალათის მონაცემების მიღება
+  //  სერვერიდან.
+
+
   private apiUrl = 'https://restaurant.stepprojects.ge/api/Baskets';
   private basketItemsSubject = new BehaviorSubject<BasketItem[]>([]);
   public basketItems$ = this.basketItemsSubject.asObservable();
@@ -38,13 +47,13 @@ export class BasketService {
       .subscribe((items) => {
         console.log('Received basket items from server:', items);
  
-        // Clear existing items to prevent duplicates
+       
         const itemsWithIndex = items.map((item, index) => {
-          // Make sure we preserve product data if available
+         
           return {
             ...item,
             clientId: index,
-            quantity: item.quantity || 1, // Ensure quantity is always set
+            quantity: item.quantity || 1, 
           };
         });
  
@@ -60,7 +69,7 @@ export class BasketService {
   addToBasket(product: Product, quantity: number = 1): Observable<BasketItem> {
     console.log('Adding to basket:', product, quantity);
  
-    // Always add with quantity 1
+   
     const basketItem: BasketItem = {
       quantity: 1,
       price: product.price,
@@ -72,7 +81,7 @@ export class BasketService {
       .pipe(
         tap(() => {
           console.log('Item added to basket, reloading basket data');
-          this.loadBasket(); // Reload basket to ensure accurate data
+          this.loadBasket(); 
         }),
         catchError((error) => {
           console.error('Error adding to basket:', error);
@@ -95,7 +104,7 @@ export class BasketService {
  
       console.log('Sending updated item to AddToBasket:', updatedItem);
  
-      // First update locally for immediate feedback
+     
       const currentItems = this.basketItemsSubject.getValue();
       const index = currentItems.findIndex(
         (item) =>
@@ -112,8 +121,7 @@ export class BasketService {
         this.basketItemsSubject.next(updatedItems);
       }
  
-      // Instead of using AddToBasket which might be causing duplication,
-      // let's try a custom solution by removing and then adding
+      
       return this.http
         .delete(`${this.apiUrl}/DeleteProduct/${productIdToUse}`)
         .pipe(
@@ -187,7 +195,7 @@ export class BasketService {
         .pipe(
           tap(() => {
             console.log('Item removed, reloading basket data');
-            this.loadBasket(); // Reload basket to ensure accurate data
+            this.loadBasket();
           }),
           catchError((error) => {
             console.error('Error removing item using product ID:', error);
@@ -200,6 +208,7 @@ export class BasketService {
     }
   }
  
+  // ანუ აჩვენებს რამდენი პროდუქტი გვაქვს კალათაში
   getTotalItems(): Observable<number> {
     return new Observable<number>((observer) => {
       this.basketItems$.subscribe((items) => {
@@ -208,7 +217,7 @@ export class BasketService {
       });
     });
   }
- 
+  // ანუ აჩვენებს კალათაში ჯამურ თანხას(მთლიანად)
   getTotalPrice(): Observable<number> {
     return new Observable<number>((observer) => {
       this.basketItems$.subscribe((items) => {
@@ -221,6 +230,9 @@ export class BasketService {
     });
   }
  
+  //იღებს კალათის ყველა ელემენტს და ბეჭდავს 
+  // დეტალურ ინფორმაციას კონსოლში (დასახმარებლად/დასატესტად).
+  // არაა საჭირო უბრალოდ დასატესტად
   inspectBasketItems(): void {
     this.http
       .get<any>(`${this.apiUrl}/GetAll`, { observe: 'response' })
@@ -254,6 +266,12 @@ export class BasketService {
       );
   }
  
+
+
+  //სხვადასხვა მეთოდით ცდილობს კალათიდან ელემენტის წაშლას 
+  // (სხვადასხვა ID-ით ან body-ით), 
+  // რათა ნახოს რომელი მუშაობს სწორად API-ზე.
+
   testDeleteMethods(item: BasketItem): void {
     console.log('Testing delete methods for item:', item);
  

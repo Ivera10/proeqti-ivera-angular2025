@@ -1,27 +1,67 @@
+
+
+
  <div class="card-page-mtliani">
-  <div *ngFor="let product of products" class="card-page-card">
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+ 
+  <div *ngIf="error" class="error-message">
+    <p>Sorry, the product could not be found.</p>
+    <button routerLink="/">Return to Home</button>
+  </div>
+ 
+  <div *ngIf="!loading && !error && product" class="card-page-card">
     <div class="card-page-image-section">
-      <img [src]="product?.image" alt="{{ product?.name }}" />
+      <img [src]="product.image" alt="{{ product.name }}" />
     </div>
+    <hr>
     <div class="card-page-info-section">
-      <h2 class="card-page-title">{{ product?.name }}</h2>
+      <h2 class="card-page-title">{{ product.name }}</h2>
+      <hr>
       <div class="card-page-spiciness">
-        <span>Spiciness: 🔥{{ product?.spiciness }}</span>
+        <span>Spiciness: 🔥{{ product.spiciness }}</span>
       </div>
       <div class="card-page-tags">
-        <span *ngIf="product?.nuts" class="card-page-tag nuts">🥜 Contains Nuts</span>
-        <span *ngIf="product?.vegetarian" class="card-page-tag vegetarian">🌱 Vegetarian</span>
+        <span *ngIf="product.nuts" class="card-page-tag nuts"
+          > Contains Nuts</span
+        >
+         <span *ngIf="product.vegeterian" class="card-page-tag vegetarian"
+          > Vegetarian</span
+        >
+      
+
+       <p class="batonioto"> Ingredients:
+Minced chicken (often briefly poached or stir-fried)
+
+Shallots (thinly sliced)
+
+Fresh herbs: mint, cilantro, green onions
+
+Toasted rice powder (khao khua) – gives a nutty texture
+
+Lime juice – for acidity
+
+Fish sauce – for umami and saltiness
+
+Chili flakes – for heat.</p>
+        
+       
       </div>
-      <div class="card-page-description">
-        <p>{{ product?.description || 'No description available.' }}</p>
-      </div>
+      <hr>
+
+       <span class="card-page-price">$ {{ product.price }}</span>
+
       <div class="card-page-price-row">
-        <span class="card-page-price">$ {{ product?.price }}</span>
-        <button class="card-page-add-btn">Add to cart</button>
+      
+   
+        <button class="card-page-add-btn" (click)="addToCart(product)">
+          Add to cart
+        </button>
+        <button routerLink="/" class="back-btn">Back to products</button>
       </div>
     </div>
   </div>
-</div> 
-
-
+</div>
 

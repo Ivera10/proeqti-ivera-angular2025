@@ -1,14 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-basket',
-//   imports: [],
-//   templateUrl: './basket.component.html',
-//   styleUrl: './basket.component.css'
-// })
-// export class BasketComponent {
-
-// }
 
 
 
@@ -39,12 +28,12 @@ export class BasketComponent implements OnInit {
 
   loadBasketItems(): void {
     this.loading = true;
-    this.basketService.loadBasket(); // Force reload basket data
+    this.basketService.loadBasket(); 
 
     this.basketService.getBasketItems().subscribe((items) => {
       console.log('Basket items loaded:', items);
 
-      // Log each item's id and productId for debugging
+     
       items.forEach((item, index) => {
         console.log(
           `Item ${index}: id=${item.id}, productId=${item.productId}`
@@ -60,13 +49,13 @@ export class BasketComponent implements OnInit {
   removeItem(item: BasketItem, index: number): void {
     console.log('Attempting to remove item:', item, 'at index:', index);
 
-    // First, optimistically remove from the UI for instant feedback
+
     const localIndex = this.basketItems.findIndex(
       (i) => i === item // Compare by reference
     );
 
     if (localIndex > -1) {
-      // Create a copy of the array for immutability
+
       this.basketItems = [
         ...this.basketItems.slice(0, localIndex),
         ...this.basketItems.slice(localIndex + 1),
@@ -76,19 +65,18 @@ export class BasketComponent implements OnInit {
 
     this.loading = true;
 
-    // Pass the client-side index to help identify the item
+
     this.basketService
       .removeFromBasket(item.id, item.productId, index)
       .subscribe(
         () => {
           console.log('Item removed successfully from server');
-          this.showNotification('✅ Item removed from cart');
+          // this.showNotification('✅ Item removed from cart');
           this.loading = false;
         },
         () => {
-          // Even if there's an error, we've already updated the UI
-          // so just show a message and don't roll back the change
-          this.showNotification('Item removed from cart (local only)');
+
+          // this.showNotification('Item removed from cart (local only)');
           this.loading = false;
         }
       );
@@ -103,10 +91,9 @@ export class BasketComponent implements OnInit {
       return;
     }
 
-    // First update locally for immediate feedback
     const index = this.basketItems.findIndex((i) => i === item);
     if (index !== -1) {
-      // Create a new array with the updated item
+
       const updatedItems = [...this.basketItems];
       updatedItems[index] = {
         ...item,
@@ -147,7 +134,7 @@ export class BasketComponent implements OnInit {
   }
 
   checkout(): void {
-    // Implement checkout functionality
+
     alert('Checkout functionality will be implemented soon!');
   }
 
@@ -160,7 +147,7 @@ export class BasketComponent implements OnInit {
 
     document.body.appendChild(notification);
 
-    // Auto-remove after 3 seconds
+
     setTimeout(() => {
       notification.classList.add('fade-out');
       setTimeout(() => {
@@ -170,10 +157,10 @@ export class BasketComponent implements OnInit {
   }
 
   testDelete(item: BasketItem): void {
-    // This will try all possible deletion methods
+
     (this.basketService as any).testDeleteMethods(item);
 
-    // Also show a notification so the user knows we're trying
+
     this.showNotification('Testing different delete methods...');
   }
 
