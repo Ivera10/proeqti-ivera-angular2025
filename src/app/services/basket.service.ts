@@ -19,6 +19,13 @@ export interface BasketItem {
 })
 export class BasketService {
 
+//   GET მეთოდი
+// გამოიყენება სერვერიდან ინფორმაციის მისაღებად.
+
+
+// POST მეთოდი
+// გამოიყენება სერვერზე ინფორმაციის გასაგზავნად ან ახალი მონაცემის შესაქმნელად.
+
 
   //ეს BasketService არის Angular სერვისი, რომელიც მართავს კალათის (basket)
   // მონაცემებს ონლაინ მაღაზიაში. მისი ძირითადი დანიშნულებაა კალათაში 
@@ -134,7 +141,7 @@ export class BasketService {
               .pipe(
                 tap(() => {
                   console.log('Item updated with new quantity');
-                  // No need to reload as we've already updated locally
+                 
                 }),
                 catchError((addError) => {
                   console.error('Error adding updated item:', addError);
@@ -145,14 +152,13 @@ export class BasketService {
           }),
           catchError((error) => {
             console.error('Error removing before update:', error);
- 
-            // Try direct update via add anyway
+
             return this.http
               .post<BasketItem>(`${this.apiUrl}/AddToBasket`, updatedItem)
               .pipe(
                 tap(() => {
                   console.log('Item updated with direct add');
-                  this.loadBasket(); // Reload to clean up duplicates
+                  this.loadBasket();
                 }),
                 catchError((addError) => {
                   console.error('Error on direct add:', addError);

@@ -62,6 +62,8 @@ export class HeaderComponent implements OnInit {
     document.body.style.overflow = '';
   }
  
+
+
   // Close menu when clicking outside
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
