@@ -84,7 +84,11 @@
     </a>
   </div>
  
-  <button
+
+
+
+
+    <button
     class="hamburger"
     [class.open]="isMenuOpen"
     (click)="toggleMenu()"
@@ -113,35 +117,43 @@
   </div>
 
 
-  <nav>
+
+
+  
+
+
+     <nav>
   <div class="container">
     <div class="nav-wrapper">
       <!-- ლოგო და მთავარ გვერდზე მისამართი -->
-      <a routerLink="/home" class="brand-logo">ჩემი აპლიკაცია</a>
+
+      <!------- <a routerLink="/home" class="brand-logo">ჩემი აპლიკაცია</a> ------->
 
       <ul class="nav-links">
-        <li><a routerLink="/home">მთავარი</a></li>
+
+        <!-------- <li><a routerLink="/home">მთავარი</a></li> ------->
 
         <!-- თუ მომხმარებელი არ არის ავტორიზებული, ვაჩვენოთ შესვლა/რეგისტრაცია -->
         <ng-container *ngIf="!userService.isLoggedIn()">
-          <li><a routerLink="/login">შესვლა</a></li>
-          <li><a routerLink="/register">რეგისტრაცია</a></li>
+          <a routerLink="/login">Login</a>
+          <a routerLink="/register">Registration</a>
         </ng-container>
 
         <!-- თუ მომხმარებელი ავტორიზებულია, ვაჩვენოთ სახელი და გასვლის ღილაკი -->
         <ng-container *ngIf="userService.isLoggedIn()">
-          <li>
+         
             <a routerLink="/profile" class="username">{{ getUserName() }}</a>
-          </li>
-          <li><a href="#" (click)="logout($event)">გასვლა</a></li>
+          
+          <a href="#" (click)="logout($event)">LogOut</a>
         </ng-container>
       </ul>
     </div>
   </div>
 </nav>
+ 
 
 
 
 
 </header>
- 
+

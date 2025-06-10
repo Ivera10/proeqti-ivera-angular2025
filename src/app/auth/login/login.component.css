@@ -1,81 +1,164 @@
-.login-container {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
 
-.form-group {
-  margin-bottom: 15px;
-}
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.buttons {
+/* Background Setup (optional for full-page background effect) */
+body {
+  background: linear-gradient(135deg, #74ebd5, #9face6);
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
 }
 
-button {
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Container Styling */
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease-in-out;
+  margin: auto;
+  margin-top: 10%;
 }
 
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-a {
+/* Header */
+.login-container h2 {
   text-align: center;
-  color: #2196f3;
-  text-decoration: none;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #222;
+  font-weight: 600;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background: #f1f1f1;
+  font-size: 1rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background: #fff;
+  box-shadow: 0 0 0 2px #007bff44;
+  outline: none;
+}
+
+/* Validation Messages */
 .validation-error {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
+  color: #e63946;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* Feedback Messages */
+.success-message,
+.error-message {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
 .success-message {
-  background-color: #dff0d8;
-  color: #3c763d;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 4px;
+  background: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
 }
 
 .error-message {
-  background-color: #f2dede;
-  color: #a94442;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 4px;
+  background: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.buttons button {
+  padding: 0.9rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1rem;
+}
+
+.buttons button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.buttons button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.buttons a {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #0047ab;
+  text-decoration: none;
+}
+
+.buttons a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 780px) {
+  .login-container {
+
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    margin-top: 30%
+    
+  }
+
+  .login-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .buttons button {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .login-container {
+
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    margin-top: 25%;
+    
+  }
+
 }

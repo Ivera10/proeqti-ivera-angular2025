@@ -1,9 +1,10 @@
 <div class="login-container">
-  <h2>ავტორიზაცია</h2>
+  <h2>
+Authorization</h2>
 
   <!-- შეტყობინება წარმატებული ავტორიზაციისთვის -->
   <div *ngIf="success" class="success-message">
-    ავტორიზაცია წარმატებით დასრულდა!
+    Authorization completed successfully!
   </div>
 
   <!-- შეტყობინება შეცდომის შემთხვევაში -->
@@ -15,12 +16,12 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <!-- ტელეფონის ნომერი -->
     <div class="form-group">
-      <label for="phoneNumber">ტელეფონის ნომერი</label>
+      <label for="phoneNumber">Phone Number</label>
       <input
         type="text"
         id="phoneNumber"
         formControlName="phoneNumber"
-        placeholder="შეიყვანეთ ტელეფონის ნომერი"
+        placeholder="Enter a phone number"
       />
       <!-- ვალიდაციის შეტყობინებები -->
       <div
@@ -28,26 +29,26 @@
         class="validation-error"
       >
         <div *ngIf="f['phoneNumber'].errors['required']">
-          ტელეფონის ნომერი აუცილებელია
+          Phone number is required
         </div>
       </div>
     </div>
 
     <!-- პაროლი -->
     <div class="form-group">
-      <label for="password">პაროლი</label>
+      <label for="password">Password</label>
       <input
         type="password"
         id="password"
         formControlName="password"
-        placeholder="შეიყვანეთ პაროლი"
+        placeholder="Enter the password"
       />
       <!-- ვალიდაციის შეტყობინებები -->
       <div
         *ngIf="f['password'].touched && f['password'].errors"
         class="validation-error"
       >
-        <div *ngIf="f['password'].errors['required']">პაროლი აუცილებელია</div>
+        <div *ngIf="f['password'].errors['required']">Password is required</div>
       </div>
     </div>
 
@@ -55,9 +56,9 @@
     <div class="buttons">
       <button type="submit" [disabled]="loginForm.invalid || loading">
         <!-- ჩვენება "იტვირთება" როცა მოთხოვნა იგზავნება -->
-        {{ loading ? "იტვირთება..." : "შესვლა" }}
+        {{ loading ? "is loading..." : "Login" }}
       </button>
-      <a routerLink="/register">არ გაქვთ ანგარიში? დარეგისტრირდით</a>
+      <a routerLink="/register">Don't have an account? Sign up.</a>
     </div>
   </form>
 </div>

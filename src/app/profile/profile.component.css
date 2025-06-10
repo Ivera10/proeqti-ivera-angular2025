@@ -1,0 +1,95 @@
+
+
+
+.profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin-top: 200px;
+}
+
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #2c3e50;
+  font-size: 28px;
+}
+
+.profile-info {
+  margin-top: 10px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 16px;
+}
+
+.label {
+  font-weight: 600;
+  color: #444;
+}
+
+.value {
+  color: #555;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 0;
+}
+
+.note {
+  background-color: #fff3cd;
+  border-left: 5px solid #ffc107;
+  padding: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  color: #856404;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  border-left: 5px solid #dc3545;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  color: #721c24;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 30px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+@media screen and (max-width: 780px) {
+  .profile-container {
+ 
+    width: 80%;
+  }
+
+
+}

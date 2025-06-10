@@ -81,14 +81,14 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: (response) => {
           // დავლოგოთ მიღებული პასუხი
-          console.log('ავტორიზაციის პასუხი:', response);
+          console.log('Login response:', response);
 
           this.success = true; // ავტორიზაცია წარმატებულია
 
           // ცადეთ მომხმარებლის სრული ინფორმაციის მიღება
           this.userService.fetchUserDetails().subscribe({
             next: (userDetails) => {
-              console.log('მომხმარებლის სრული ინფორმაცია:', userDetails);
+              console.log('User details:', userDetails);
               this.loading = false; // გამოვრთოთ loading მდგომარეობა
 
               // წარმატებული ავტორიზაციის შემდეგ გადავიდეს მთავარ გვერდზე 1 წამში
@@ -97,7 +97,7 @@ export class LoginComponent implements OnInit {
               }, 1000);
             },
             error: (err) => {
-              console.error('მომხმარებლის დეტალების მიღება ვერ მოხერხდა:', err);
+              console.error('Failed to fetch user details:', err);
               this.loading = false; // გამოვრთოთ loading მდგომარეობა
 
               // მაინც გადავიდეს მთავარ გვერდზე, თუნდაც არასრული ინფორმაციით
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           // ავტორიზაციის შეცდომის შემთხვევაში
           this.error =
-            'ავტორიზაცია ვერ მოხერხდა. გთხოვთ, შეამოწმეთ სახელი და პაროლი';
+            'Login failed. Please check your phone number and password.';
           this.loading = false; // გამოვრთოთ loading მდგომარეობა
           console.error('Login error', error); // დავლოგოთ შეცდომა კონსოლში
         },

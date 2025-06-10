@@ -61,11 +61,11 @@ export class ProfileComponent implements OnInit {
   refreshUserDetails(): void {
     this.userService.fetchUserDetails().subscribe({
       next: (updatedUser) => {
-        console.log('მომხმარებლის მონაცემები განახლდა:', updatedUser);
+        console.log('User details updated:', updatedUser);
         this.user = updatedUser; // კომპონენტის user ცვლადის განახლება
       },
       error: (err) => {
-        console.error('მომხმარებლის მონაცემების განახლების შეცდომა:', err);
+        console.error('Failed to update user details:', err);
       },
     });
   }
@@ -81,3 +81,5 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']); // გადავამისამართოთ ავტორიზაციის გვერდზე
   }
 }
+
+

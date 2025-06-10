@@ -1,4 +1,4 @@
-// import { Component } from '@angular/core';
+// import { Component } from '@angular/core};
 
 // @Component({
 //   selector: 'app-register',
@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
         if (error.error && typeof error.error === 'string') {
           this.error = error.error; // სერვერიდან მიღებული შეცდომის შეტყობინება
         } else {
-          this.error = 'რეგისტრაცია ვერ მოხერხდა. გთხოვთ, სცადოთ ხელახლა'; // სტანდარტული შეცდომის შეტყობინება
+          this.error = 'Registration failed. Please try again.'; // Standard error message
         }
         this.loading = false; // გამოვრთოთ loading მდგომარეობა
         console.error('Registration error', error); // დავლოგოთ შეცდომა კონსოლში

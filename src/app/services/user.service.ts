@@ -6,87 +6,87 @@ import { User } from '../models/user.model';
 
 // @Injectable დეკორატორი აღნიშნავს, რომ ეს სერვისი შეიძლება დაინჯექტდეს სხვა კლასებში
 @Injectable({
-  providedIn: 'root', // სერვისი ხელმისაწვდომია მთელ აპლიკაციაში
+  providedIn: 'root', // Service is available throughout the app
 })
 export class UserService {
-  private apiUrl = 'https://rentcar.stepprojects.ge/api/Users'; // API ენდპოინტის მისამართი
+  private apiUrl = 'https://rentcar.stepprojects.ge/api/Users'; // API endpoint
 
-  // BehaviorSubject არის RxJS-ის სპეციალური ტიპი, რომელიც ინახავს მიმდინარე მნიშვნელობას და აწვდის მას ახალ subscription-ებს
+  // BehaviorSubject is a special RxJS type that holds the current value and provides it to new subscriptions
   private currentUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
 
-  // Observable მიმდინარე მომხმარებლის მონაცემების მოსასმენად
+  // Observable for listening to current user data
   public currentUser: Observable<User | null> =
     this.currentUserSubject.asObservable();
 
-  private tokenCheckInterval: any; // ინტერვალი ტოკენის ვადის შესამოწმებლად
+  private tokenCheckInterval: any; // Interval for checking token validity
 
   constructor(private http: HttpClient) {
-    this.initUserFromStorage(); // ინიციალიზაცია ლოკალური საცავიდან
-    this.startTokenValidityCheck(); // ტოკენის ვადის პერიოდული შემოწმების დაწყება
+    this.initUserFromStorage(); // Initialize from local storage
+    this.startTokenValidityCheck(); // Start periodic token validity check
   }
 
-  // მომხმარებლის ინიციალიზაცია localStorage-დან - უსაფრთხო მიდგომა
+  // Initialize user from localStorage - safe approach
   private initUserFromStorage(): void {
     try {
       const savedUserString = localStorage.getItem('currentUser');
-      // მხოლოდ მაშინ ვცდილობთ გაპარსვას, როდესაც სტრინგი არ არის null ან undefined
+      // Only try to parse if string is not null or undefined
       if (
         savedUserString &&
         savedUserString !== 'undefined' &&
         savedUserString !== 'null'
       ) {
         const savedUser = JSON.parse(savedUserString);
-        this.currentUserSubject.next(savedUser); // მომხმარებლის ინფორმაციის განახლება BehaviorSubject-ში
+        this.currentUserSubject.next(savedUser); // Update user info in BehaviorSubject
         console.log('User loaded from storage:', !!savedUser);
       } else {
         console.log('No valid user data in storage');
       }
     } catch (error) {
       console.error('Error loading user data from localStorage:', error);
-      // პოტენციურად დაზიანებული მონაცემების წაშლა
+      // Remove potentially corrupted data
       localStorage.removeItem('currentUser');
       localStorage.removeItem('token');
     }
   }
 
-  // ახალი მომხმარებლის რეგისტრაცია
+  // Register a new user
   register(user: UserDTO): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, user);
   }
 
-  // მომხმარებლის ავტორიზაცია - სრულად გადამუშავებული სანდოობისთვის
+  // User login - fully refactored for reliability
   login(user: Partial<UserDTO>): Observable<any> {
-    console.log('ავტორიზაციის მცდელობა:', user);
+    console.log('Login attempt:', user);
 
     return this.http.post<any>(`${this.apiUrl}/login`, user).pipe(
       tap({
         next: (response) => {
-          console.log('API პასუხი:', response);
+          console.log('API response:', response);
 
-          // დავრწმუნდეთ, რომ გვაქვს ტოკენი, სანამ გავაგრძელებთ
+          // Make sure we have a token before proceeding
           if (response && response.token) {
             try {
-              // ჯერ შევინახოთ ტოკენი
+              // Save token first
               localStorage.setItem('token', response.token);
 
-              // შემდეგ შევინახოთ მომხმარებლის მონაცემები, თუ ისინი ხელმისაწვდომია
+              // Then save user data if available
               if (response.user) {
-                // გავრცელებული ობიექტი ყველა მონაცემით
+                // Spread object with all data
                 const fullUser = {
                   ...response.user,
-                  token: response.token, // დავამატოთ token-ი მომხმარებლის ობიექტში
+                  token: response.token, // Add token to user object
                 };
 
                 const userJson = JSON.stringify(fullUser);
                 localStorage.setItem('currentUser', userJson);
                 this.currentUserSubject.next(fullUser);
                 console.log(
-                  'მომხმარებლის მონაცემები წარმატებით შენახულია:',
+                  'User data successfully saved:',
                   fullUser
                 );
               } else {
-                // მინიმალური მომხმარებლის ობიექტის შექმნა
+                // Create minimal user object
                 const minimalUser = {
                   phoneNumber: user.phoneNumber,
                   token: response.token,
@@ -98,117 +98,117 @@ export class UserService {
                 );
                 this.currentUserSubject.next(minimalUser);
                 console.log(
-                  'შექმნილია მინიმალური მომხმარებლის პროფილი:',
+                  'Minimal user profile created:',
                   minimalUser
                 );
 
-                // ცადეთ მომხმარებლის სრული ინფორმაციის მიღება
+                // Try to fetch full user details
                 this.fetchUserDetails().subscribe({
                   next: (userDetails) => {
                     console.log(
-                      'მომხმარებლის დეტალები მიღებულია:',
+                      'User details fetched:',
                       userDetails
                     );
                   },
                   error: (err) => {
                     console.error(
-                      'მომხმარებლის დეტალების მიღების შეცდომა:',
+                      'Error fetching user details:',
                       err
                     );
                   },
                 });
               }
             } catch (error) {
-              console.error('შეცდომა მონაცემების შენახვისას:', error);
-              // მაშინაც კი, თუ ლოკალური შენახვა წარუმატებელია, მაინც შეგვიძლია განვაახლოთ ოპერატიული მეხსიერების მდგომარეობა
+              console.error('Error saving data:', error);
+              // Even if local storage fails, we can still update in-memory state
               if (response.user) {
                 this.currentUserSubject.next(response.user);
               }
             }
           } else {
-            console.warn('ავტორიზაციის პასუხში არ არის token');
+            console.warn('No token in login response');
           }
         },
         error: (error) => {
-          console.error('ავტორიზაციის მოთხოვნა წარუმატებელია:', error);
+          console.error('Login request failed:', error);
         },
       })
     );
   }
 
-  // ახალი მეთოდი: მომხმარებლის დეტალური ინფორმაციის მიღება API-დან
+  // New method: fetch detailed user info from API
   fetchUserDetails(): Observable<User> {
-    // მოთხოვნაში უნდა გადავცეთ ავტორიზაციის ტოკენი
+    // Token must be provided in the request
     const token = localStorage.getItem('token');
     const currentUser = this.currentUserValue;
 
-    // თუ ტოკენი ან მომხმარებლის ნომერი არ არის, შევწყვიტოთ ოპერაცია
+    // If token or user phone number is missing, abort
     if (!token || !currentUser?.phoneNumber) {
       return new Observable((observer) => {
         observer.error(
-          'ტოკენი ან მომხმარებლის ტელეფონის ნომერი არ არის ხელმისაწვდომი'
+          'Token or user phone number is not available'
         );
         observer.complete();
       });
     }
 
-    // HTTP ჰედერების კონფიგურაცია ავტორიზაციის ტოკენით
+    // HTTP headers with authorization token
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     };
 
-    // API მოთხოვნა მომხმარებლის მონაცემების მისაღებად ტელეფონის ნომრით
+    // API request to get user data by phone number
     return this.http
       .get<User>(`${this.apiUrl}/${currentUser.phoneNumber}`, { headers })
       .pipe(
         tap({
           next: (userDetails) => {
             if (userDetails) {
-              // დავამატოთ token-ი მომხმარებლის ობიექტს
+              // Add token to user object
               const enrichedUser: User = {
                 ...userDetails,
                 token: token,
               };
 
-              // განვაახლოთ მომხმარებლის ინფორმაცია localStorage-ში და BehaviorSubject-ში
+              // Update user info in localStorage and BehaviorSubject
               localStorage.setItem('currentUser', JSON.stringify(enrichedUser));
               this.currentUserSubject.next(enrichedUser);
 
               console.log(
-                'მომხმარებლის სრული მონაცემები განახლებულია:',
+                'Full user data updated:',
                 enrichedUser
               );
             }
           },
           error: (error) => {
-            console.error('მომხმარებლის დეტალების მიღების შეცდომა:', error);
-            // შეცდომის შემთხვევაში არ გავანულოთ არსებული ინფორმაცია
+            console.error('Error fetching user details:', error);
+            // Do not clear existing info on error
           },
         })
       );
   }
 
-  // მომხმარებლის გასვლა (logout)
+  // User logout
   logout() {
-    localStorage.removeItem('currentUser'); // წავშალოთ მომხმარებლის მონაცემები
-    localStorage.removeItem('token'); // წავშალოთ ავტორიზაციის ტოკენი
-    this.currentUserSubject.next(null); // განვაახლოთ BehaviorSubject null მნიშვნელობით
+    localStorage.removeItem('currentUser'); // Remove user data
+    localStorage.removeItem('token'); // Remove auth token
+    this.currentUserSubject.next(null); // Update BehaviorSubject with null
     console.log('User logged out');
   }
 
-  // მიმდინარე ავტორიზებული მომხმარებლის მიღება
+  // Get current authorized user
   public get currentUserValue(): User | null {
     return this.currentUserSubject.value;
   }
 
-  // გაუმჯობესებული ავტორიზაციის შემოწმება - უფრო სანდო
+  // Improved login check - more reliable
   isLoggedIn(): boolean {
     try {
-      const hasToken = !!localStorage.getItem('token'); // აქვს თუ არა ტოკენი
+      const hasToken = !!localStorage.getItem('token'); // Has token
       const hasUser =
-        !!this.currentUserValue || !!localStorage.getItem('currentUser'); // არსებობს თუ არა მომხმარებელი
-      const isLoggedIn = hasToken && hasUser; // ავტორიზებულია, თუ ორივე პირობა სრულდება
+        !!this.currentUserValue || !!localStorage.getItem('currentUser'); // Has user
+      const isLoggedIn = hasToken && hasUser; // Logged in if both are true
       console.log(
         `Auth check: hasToken=${hasToken}, hasUser=${hasUser}, isLoggedIn=${isLoggedIn}`
       );
@@ -219,26 +219,26 @@ export class UserService {
     }
   }
 
-  // ტოკენის ვალიდურობის პერიოდული შემოწმების დაწყება
+  // Start periodic token validity check
   private startTokenValidityCheck(): void {
-    // ტოკენის ვალიდურობის შემოწმება ყოველ 30 წამში
+    // Check token validity every 30 seconds
     this.tokenCheckInterval = setInterval(() => {
       this.checkAndUpdateAuthStatus();
     }, 30000);
   }
 
-  // ტოკენის ვალიდურობის შემოწმება და ავტორიზაციის სტატუსის განახლება
+  // Check token validity and update auth status
   private checkAndUpdateAuthStatus(): void {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        // ტოკენი არ მოიძებნა, გავიდეთ სისტემიდან
+        // No token found, log out
         console.log('No auth token found, logging out');
         this.logout();
         return;
       }
 
-      // შევამოწმოთ თუ ტოკენს ვადა გაუვიდა (JWT ტოკენის შემთხვევაში)
+      // Check if token is expired (for JWT tokens)
       if (this.isTokenExpired(token)) {
         console.log('Auth token expired, logging out');
         this.logout();
@@ -248,32 +248,32 @@ export class UserService {
     }
   }
 
-  // JWT ტოკენის ვადის ამოწურვის მარტივი შემოწმება
+  // Simple JWT token expiration check
   private isTokenExpired(token: string): boolean {
     try {
-      // JWT ტოკენებისთვის - დეკოდირება და ვადის შემოწმება
-      // ეს არის მარტივი იმპლემენტაცია, უფრო მძლავრი იმპლემენტაციები იყენებენ JWT ბიბლიოთეკას
+      // For JWT tokens - decode and check expiration
+      // This is a simple implementation, more robust ones use JWT libraries
       const tokenParts = token.split('.');
       if (tokenParts.length !== 3) {
-        // არ არის JWT ტოკენი, ვერ განისაზღვრება ვადა
+        // Not a JWT token, cannot determine expiration
         return false;
       }
 
       const payload = JSON.parse(atob(tokenParts[1]));
       if (!payload.exp) {
-        // არ არსებობს ვადის ამოწურვის მტკიცება
+        // No expiration claim
         return false;
       }
 
-      // შევამოწმოთ ტოკენის ვადა (exp არის წამებში, Date.now() არის მილიწამებში)
+      // Check token expiration (exp is in seconds, Date.now() is in ms)
       return payload.exp * 1000 < Date.now();
     } catch (e) {
-      // თუ გაპარსვისას მოხდა შეცდომა, კონსერვატიულად ვივარაუდოთ, რომ ტოკენი ვალიდურია
+      // If parsing fails, conservatively assume token is valid
       return false;
     }
   }
 
-  // სერვისის განადგურებისას რესურსების გასუფთავება
+  // Clean up resources when service is destroyed
   ngOnDestroy(): void {
     if (this.tokenCheckInterval) {
       clearInterval(this.tokenCheckInterval);

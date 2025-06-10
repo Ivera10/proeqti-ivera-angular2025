@@ -1,30 +1,38 @@
 <div class="profile-container">
-  <h2>პროფილი</h2>
+  <h2>Profile </h2>
 
   <!-- მომხმარებლის ინფორმაციის გამოტანა -->
   <div class="profile-info" *ngIf="user">
     <div class="info-item" *ngIf="hasValue('firstName')">
-      <span class="label">სახელი:</span>
+      <span class="label">Name:</span>
       <span class="value">{{ user.firstName }}</span>
     </div>
 
+    <hr>
+
     <div class="info-item" *ngIf="hasValue('lastName')">
-      <span class="label">გვარი:</span>
+      <span class="label">Last Name:</span>
       <span class="value">{{ user.lastName }}</span>
     </div>
 
+    <hr>
+
     <div class="info-item" *ngIf="hasValue('phoneNumber')">
-      <span class="label">ტელეფონი:</span>
+      <span class="label">PhoneNumber:</span>
       <span class="value">{{ user.phoneNumber }}</span>
     </div>
 
+    <hr>
+
     <div class="info-item" *ngIf="hasValue('email')">
-      <span class="label">ელფოსტა:</span>
+      <span class="label">Email:</span>
       <span class="value">{{ user.email }}</span>
     </div>
 
+    <hr>
+
     <div class="info-item" *ngIf="hasValue('role')">
-      <span class="label">როლი:</span>
+      <span class="label">Role:</span>
       <span class="value">{{ user.role }}</span>
     </div>
 
@@ -36,20 +44,20 @@
       "
     >
       <p>
-        მომხმარებლის ინფორმაცია არასრულია. სახელი, გვარი და ელფოსტა
-        მნიშვნელოვანია.
+       User information is incomplete. First name, last name and email
+      are important.
       </p>
     </div>
   </div>
 
   <!-- შეტყობინება თუ მომხმარებლის მონაცემები ვერ ჩაიტვირთა -->
   <div *ngIf="!user" class="error-message">
-    მომხმარებლის მონაცემები ვერ მოიძებნა. გთხოვთ, გაიაროთ ავტორიზაცია.
+   User data not found. Please log in.
   </div>
 
   <!-- გასვლის ღილაკი -->
   <div class="buttons">
-    <button (click)="logout()">გასვლა</button>
+    <button (click)="logout()">Log Out</button>
   </div>
 </div>
 

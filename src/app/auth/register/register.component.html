@@ -1,115 +1,115 @@
 <div class="register-container">
-  <h2>რეგისტრაცია</h2>
+  <h2>Registration</h2>
 
-  <!-- წარმატებული რეგისტრაციის შეტყობინება -->
+  <!-- Success registration message -->
   <div *ngIf="success" class="success-message">
-    რეგისტრაცია წარმატებით დასრულდა! გთხოვთ, გაიაროთ ავტორიზაცია.
+    Registration completed successfully! Please log in.
   </div>
 
-  <!-- შეცდომის შეტყობინება -->
+  <!-- Error message -->
   <div *ngIf="error" class="error-message">
     {{ error }}
   </div>
 
-  <!-- რეგისტრაციის ფორმა -->
+  <!-- Registration form -->
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <!-- სახელი -->
+    <!-- First Name -->
     <div class="form-group">
-      <label for="firstName">სახელი</label>
+      <label for="firstName">First Name</label>
       <input
         type="text"
         id="firstName"
         formControlName="firstName"
-        placeholder="შეიყვანეთ სახელი"
+        placeholder="Enter your first name"
       />
       <div
         *ngIf="f['firstName'].touched && f['firstName'].errors"
         class="validation-error"
       >
-        <div *ngIf="f['firstName'].errors['required']">სახელი აუცილებელია</div>
+        <div *ngIf="f['firstName'].errors['required']">First name is required</div>
       </div>
     </div>
 
-    <!-- გვარი -->
+    <!-- Last Name -->
     <div class="form-group">
-      <label for="lastName">გვარი</label>
+      <label for="lastName">Last Name</label>
       <input
         type="text"
         id="lastName"
         formControlName="lastName"
-        placeholder="შეიყვანეთ გვარი"
+        placeholder="Enter your last name"
       />
       <div
         *ngIf="f['lastName'].touched && f['lastName'].errors"
         class="validation-error"
       >
-        <div *ngIf="f['lastName'].errors['required']">გვარი აუცილებელია</div>
+        <div *ngIf="f['lastName'].errors['required']">Last name is required</div>
       </div>
     </div>
 
-    <!-- ტელეფონის ნომერი -->
+    <!-- Phone Number -->
     <div class="form-group">
-      <label for="phoneNumber">ტელეფონის ნომერი</label>
+      <label for="phoneNumber">Phone Number</label>
       <input
         type="text"
         id="phoneNumber"
         formControlName="phoneNumber"
-        placeholder="შეიყვანეთ ტელეფონი"
+        placeholder="Enter your phone number"
       />
       <div
         *ngIf="f['phoneNumber'].touched && f['phoneNumber'].errors"
         class="validation-error"
       >
         <div *ngIf="f['phoneNumber'].errors['required']">
-          ტელეფონი აუცილებელია
+          Phone number is required
         </div>
       </div>
     </div>
 
-    <!-- ელფოსტა -->
+    <!-- Email -->
     <div class="form-group">
-      <label for="email">ელფოსტა</label>
+      <label for="email">Email</label>
       <input
         type="email"
         id="email"
         formControlName="email"
-        placeholder="შეიყვანეთ ელფოსტა"
+        placeholder="Enter your email"
       />
       <div
         *ngIf="f['email'].touched && f['email'].errors"
         class="validation-error"
       >
-        <div *ngIf="f['email'].errors['required']">ელფოსტა აუცილებელია</div>
-        <div *ngIf="f['email'].errors['email']">ელფოსტის ფორმატი არასწორია</div>
+        <div *ngIf="f['email'].errors['required']">Email is required</div>
+        <div *ngIf="f['email'].errors['email']">Invalid email format</div>
       </div>
     </div>
 
-    <!-- პაროლი -->
+    <!-- Password -->
     <div class="form-group">
-      <label for="password">პაროლი</label>
+      <label for="password">Password</label>
       <input
         type="password"
         id="password"
         formControlName="password"
-        placeholder="შეიყვანეთ პაროლი"
+        placeholder="Enter your password"
       />
       <div
         *ngIf="f['password'].touched && f['password'].errors"
         class="validation-error"
       >
-        <div *ngIf="f['password'].errors['required']">პაროლი აუცილებელია</div>
+        <div *ngIf="f['password'].errors['required']">Password is required</div>
         <div *ngIf="f['password'].errors['minlength']">
-          პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს
+          Password must be at least 6 characters
         </div>
       </div>
     </div>
 
-    <!-- ღილაკები -->
+    <!-- Buttons -->
     <div class="buttons">
       <button type="submit" [disabled]="registerForm.invalid || loading">
-        {{ loading ? "იტვირთება..." : "რეგისტრაცია" }}
+        {{ loading ? "Loading..." : "Register" }}
       </button>
-      <a routerLink="/login">უკვე გაქვთ ანგარიში? შედით სისტემაში</a>
+      <a routerLink="/login">Already have an account? Log in</a>
     </div>
   </form>
 </div>
