@@ -1,22 +1,9 @@
-body {
-    font-family: 'Poppins', sans-serif; 
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap');
+body { font-family: 'Poppins', sans-serif; }
+h1, h2, .spiciness-container, .price-container button { font-family: 'Roboto', sans-serif; }
+.price-container h2 { font-family: 'Montserrat', sans-serif; }
+button { font-family: 'Poppins', sans-serif; }
   
-  h1, h2, .spiciness-container, .price-container button {
-    font-family: 'Roboto', sans-serif;;
-  }
-  
-  .price-container h2 {
-    font-family: 'Montserrat', sans-serif; 
-  }
-  
-  button {
-    font-family: 'Poppins', sans-serif;
-  }
-  
-   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Montserrat:wght@400;600&display=swap');
-  
-
   .flex {
     display: flex;
     justify-content: center;
